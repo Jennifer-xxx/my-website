@@ -8,3 +8,59 @@ output:
 ---
 
 This is my JSC370 Final Project website.
+
+```{r load-data, include=FALSE}
+source("process_starbucks_data.R")
+```
+
+
+```{r plot1, class.source="code-r-small", include=FALSE}
+
+p1_box <- topwords_data |>
+  plot_ly(
+    x = ~word,
+    y = ~Calories,
+    type = "box",
+    name = "Calories"
+  ) |>
+  add_boxplot(y = ~ `Fat (g)`, name = "Fat") |>
+  add_boxplot(y = ~ `Carb. (g)`, name = "Carbohydrates") |>
+  add_boxplot(y = ~ `Fiber (g)`, name = "Fiber") |>
+  add_boxplot(y = ~ `Protein (g)`, name = "Protein") |>
+  layout(
+    title = "Boxplot of Nutritional Values by Top 10 Item Words",
+    xaxis = list(title = "Top 10 Item Words"),
+    yaxis = list(title = "Nutritional Value")
+  ) |>
+  layout(boxmode = "group")
+
+```
+
+```{r plot2, class.source="code-r-small", include=FALSE}
+
+p2_scatter <- topwords_data |>
+  plot_ly(x = ~Calories,
+          y = ~`Carb. (g)`,
+          z = ~`Protein (g)`,
+          type = "scatter3d",
+          mode = "markers",
+          color=~word)
+
+```
+
+## Showcasing plots {.tabset}
+
+### Figure 1
+
+```{r echo=FALSE, warning=FALSE}
+# Interactive Plot 1
+p1_box
+```
+
+### Figure 2
+
+```{r echo=FALSE, warning=FALSE}
+p2_scatter
+```
+
+## {-}
